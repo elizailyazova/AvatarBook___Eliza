@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_all_friends">
+
+    <fragment
+        android:id="@+id/navigation_all_friends"
+        android:name="com.example.avatarbook___eliza.ui.dashboard.AllFriendsFragment"
+        android:label="All_friends"
+        tools:layout="@layout/fragment_all_friends" />
+
+    <fragment
+        android:id="@+id/navigation_input"
+        android:name="com.example.avatarbook___eliza.ui.home.InputFragment"
+        android:label="Input_friend"
+        tools:layout="@layout/fragment_input" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.avatarbook___eliza.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
+</navigation>
