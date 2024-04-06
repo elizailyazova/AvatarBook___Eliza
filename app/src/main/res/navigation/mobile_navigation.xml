@@ -3,23 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_all_friends">
+    app:startDestination="@+id/navigation_input">
 
     <fragment
         android:id="@+id/navigation_all_friends"
-        android:name="com.example.avatarbook___eliza.ui.dashboard.AllFriendsFragment"
-        android:label="All_friends"
+        android:name="com.example.avatarbook___eliza.ui.home.AllFriendsFragment"
+        android:label="My List"
         tools:layout="@layout/fragment_all_friends" />
 
     <fragment
         android:id="@+id/navigation_input"
-        android:name="com.example.avatarbook___eliza.ui.home.InputFragment"
-        android:label="Input_friend"
-        tools:layout="@layout/fragment_input" />
+        android:name="com.example.avatarbook___eliza.ui.dashboard.InputFragment"
+        android:label="Form"
+        tools:layout="@layout/fragment_input">
+        <action
+            android:id="@+id/action_navigation_input_to_navigation_all_friends"
+            app:destination="@id/navigation_all_friends" />
+    </fragment>
 
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.avatarbook___eliza.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
 </navigation>

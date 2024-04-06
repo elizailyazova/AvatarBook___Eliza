@@ -1,5 +1,6 @@
-package com.example.avatarbook___eliza.ui.home;
+package com.example.avatarbook___eliza.ui.dashboard;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,7 +17,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.room.Room;
 
+import com.example.avatarbook___eliza.MainActivity;
+import com.example.avatarbook___eliza.R;
 import com.example.avatarbook___eliza.databinding.FragmentInputBinding;
 import com.example.avatarbook___eliza.models.Student;
 import com.example.avatarbook___eliza.room.AppDataBase;
@@ -72,34 +77,62 @@ public class InputFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         binding.btnSave.setOnClickListener(v2 ->{
 
             String nameSurnameStudent = binding.editNameSurname.getText().toString();
             String telStudent = binding.editTelNumber.getText().toString();
 
-            if (nameSurnameStudent.isEmpty()||telStudent.isEmpty()) {
+            if (nameSurnameStudent.isEmpty() || telStudent.isEmpty()) {
+
                 Toast.makeText(requireActivity(), "Заполните поля ИМЯ КОНТАКТЫ",
                         Toast.LENGTH_LONG).show();
                 isImgSelected = false;
+
             } else {
                 if (isImgSelected) {
+
                     ByteArrayOutputStream baos_imageStudent = new ByteArrayOutputStream();
                     bitmap_imageStudent.compress(Bitmap.CompressFormat.PNG,
                             100, baos_imageStudent);
+
                     byte[] imageStudent = baos_imageStudent.toByteArray();
+
 
                     Student student = new Student(
                             nameSurnameStudent, telStudent, imageStudent);
 
+
+                    this.appDataBase = Room.databaseBuilder(
+                                     binding.getRoot().getContext(),
+                                     AppDataBase.class, "database")
+                                     .fallbackToDestructiveMigration()
+                                     .allowMainThreadQueries()
+                                      .build();
+
+                    studentDao = appDataBase.studentDao();
+
+                    studentDao.insert(student);
+
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+
+
+                    navController = Navigation.findNavController(requireActivity(), R.id.nav_host);
+                    navController.navigate(R.id.action_navigation_input_to_navigation_all_friends);
+                    binding.btnPerehod.setVisibility(View.VISIBLE);
+                } else {
+                    Toast.makeText(requireActivity(), "Загрузите фото",
+                            Toast.LENGTH_LONG).show();
                 }
             }
         });
 
+        binding.btnPerehod.setOnClickListener(v3->{
+            navController = Navigation.findNavController(requireActivity(), R.id.nav_host);
+            navController.navigate(R.id.action_navigation_input_to_navigation_all_friends);
+        });
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
 }

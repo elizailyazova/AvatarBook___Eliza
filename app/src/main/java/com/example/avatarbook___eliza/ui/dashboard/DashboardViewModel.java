@@ -1,4 +1,4 @@
-package com.example.avatarbook___eliza.ui.home;
+package com.example.avatarbook___eliza.ui.dashboard;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

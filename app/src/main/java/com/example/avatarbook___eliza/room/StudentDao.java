@@ -1,5 +1,8 @@
 package com.example.avatarbook___eliza.room;
 
+import androidx.room.Dao;
+
+
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -10,7 +13,7 @@ import androidx.room.Insert;
 import com.example.avatarbook___eliza.models.Student;
 
 import java.util.List;
-
+@Dao
 public interface StudentDao {
     @Query("SELECT*FROM students")
     List <Student> getAll();
